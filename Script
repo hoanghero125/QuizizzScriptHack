@@ -1,9 +1,19 @@
 // By hoanghero125
-// First we want to detect if the URL is valid
+// READ THIS FIRST
+// Quizizz Script Hack by hoanghero125
+// 1.Copy code from Script
+// 2.Join quizizz game
+// 3.Open Inspect (F12)
+// 4.Choose console
+// 5.Paste the code in the the console
+// 6.Enjoy!
+// Note: When we finish add the code into the console, the right answer will turn green
+
+
 if (window.location.href.search("quizizz.com/join/game/") == -1 && window.location.href.search("gameType=") == -1) {
     throw new Error("You aren't on a quizizz quiz. If you think this is an error please DM East_Arctica#9238 on discord!");
 }
-// Next we want to detect if it has been run before and debug is disabled.
+
 if (window.QuizizzBot && !window.QuizizzBotDebug) {
     throw new Error("Already ran Quizizz bot! Advanced: Set Window.QuizizzBotDebug to bypass this.");
 }
@@ -110,14 +120,14 @@ function GetSetData() {
 function GetAnswer(Question) {
     switch (Question.structure.kind) {
         case "BLANK":
-            // Text Response, we have no need for image detection in answers
+            
             let ToRespond = []
             for (let i = 0; i < Question.structure.options.length; i++) {
                 ToRespond.push(Question.structure.options[i].text)
             }
             return ToRespond;
         case "MSQ":
-            // Multiple Choice
+            
             let Answers = Encoding.decode(Question.structure.answer)
             Answers = JSON.parse(Answers)
             let TextArray = []
@@ -130,7 +140,7 @@ function GetAnswer(Question) {
             }
             return TextArray;
         case "MCQ":
-            // Single Choice
+            
             let AnswerNum = Encoding.decode(Question.structure.answer)
             let Answer = Question.structure.options[AnswerNum].text
             if (Answer == "") {
@@ -239,7 +249,7 @@ function QuestionChangedLoop() {
                             } else {
                                 let Answer = GetAnswer(Question)
                                 if (Array.isArray(Answer)) {
-                                    // We are on a question with multiple answers
+                                   
                                     for (let x = 0; x < Answer.length; x++) {
                                         if (Choice.innerHTML == Answer[x]) {
                                             Choice.innerHTML = "<correct-answer-x3Ca8B><u>" + Choice.innerHTML + "</u></correct-answer-x3Ca8B>"
